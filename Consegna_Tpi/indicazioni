@@ -1,0 +1,81 @@
+1) Indicazioni per la Configurazione del Progetto
+Requisiti di Sistema
+
+    Python 3.8+ (consigliato Python 3.9 o 3.10)
+
+    MySQL Server (installato e in esecuzione)
+
+    pip (gestore di pacchetti Python)
+
+Passaggi di Configurazione
+
+    Clonare o Creare la Cartella del Progetto
+    Crea una cartella dedicata al progetto (ad esempio prenotazioni_aula) e posiziona al suo interno i file seguenti:
+
+        app.py (file dell’applicazione Flask, come da codice fornito)
+
+        p_aule.sql (file con il dump del database che contiene la parte DDL)
+
+        .env (file contenente le variabili d'ambiente)
+
+        requirements.txt (elenco delle dipendenze)
+
+    Creare e Attivare un Ambiente Virtuale
+    Apri il terminale, spostati nella cartella del progetto e crea un ambiente virtuale:
+
+python -m venv venv
+
+Attiva l’ambiente virtuale:
+
+    Su Windows:
+
+venv\Scripts\activate
+
+Su Linux/macOS:
+
+    source venv/bin/activate
+
+Installare le Dipendenze
+Crea un file requirements.txt con il seguente contenuto:
+
+Flask==2.3.2
+mysql-connector-python==8.0.33
+flask-jwt-extended==4.5.0
+python-dotenv==1.0.0
+
+Installa le dipendenze con:
+
+pip install -r requirements.txt
+
+Configurare le Variabili d'Ambiente
+Crea un file .env nella root del progetto. Esempio di contenuto:
+
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=la_tua_password_mysql
+DB_NAME=p_aule
+JWT_SECRET=una_chiave_segreta_per_jwt
+
+Verifica che i valori siano corretti per il tuo ambiente MySQL.
+
+Importare il Dump del Database
+Apri il client MySQL (ad esempio, MySQL Workbench, phpMyAdmin o il terminale) ed esegui il file p_aule.sql per creare il database e tutte le tabelle necessarie:
+
+mysql -u root -p < p_aule.sql
+
+Assicurati che il database venga creato correttamente con tutte le tabelle (ruoli, utente, aula, fasce_orarie, prenotazione, allocazioni_aule).
+
+Avviare l’Applicazione Flask
+Dal terminale (con l’ambiente virtuale attivo), esegui:
+
+python app.py
+
+L’applicazione partirà in modalità debug sulla porta predefinita (5000). Puoi testare gli endpoint con uno strumento come Postman o cURL.
+
+Verifica degli Endpoint
+
+    /login: Invia una richiesta POST con le credenziali in formato JSON per ottenere il token JWT.
+
+    /bookings: Invia una richiesta POST con il token JWT per creare prenotazioni.
+
+    /calendario e /report: Invia una richiesta GET con il token JWT per visualizzare i dati aggregati.
